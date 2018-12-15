@@ -1,0 +1,34 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
+    Dim id As String
+    id = AccountsSheet.CurrentUser
+    Call HideAll
+    Call ClearAll
+End Sub
+
+Private Sub Workbook_Open()
+    Call HideAll
+    Call ClearAll
+End Sub
+
+Public Sub HideAll()
+    Dim sh As Worksheet
+    For Each sh In Sheets
+        If Not sh Is LoginSheet Then
+            sh.Visible = xlSheetVeryHidden
+        End If
+    Next
+End Sub
+Public Sub ClearAll()
+    LoginSheet.id = ""
+    LoginSheet.Password = ""
+    AccountsSheet.CurrentUser = ""
+End Sub
